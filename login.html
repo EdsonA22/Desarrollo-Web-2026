@@ -9,17 +9,17 @@
 </head>
 <body>
     <div class="wrapper">
-        <form action="">
+        <form action="login.php" method="POST">
             <i class="bx bx-education" id="logo"></i>
             <h1>SINAP</h1>
             <p>Sistema de identificación de necesidades y ajustes pedagógicos</p>
             <p class="frase">"Apoyando la inclusión y el aprendizaje accesible"</p>
         <div class="textfield">
-            <input type="email" placeholder="Correo electrónico" required>
+            <input type="email" name="correo" placeholder="Correo electrónico" required>
             <i class='bxr  bx-user-hexagon'></i> 
         </div>
         <div class="textfield">
-            <input type="password" placeholder="Contraseña" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
             <i class='bxr  bx-lock'></i> 
         </div>
 
@@ -28,7 +28,7 @@
             <label>Recordarme</label>
             <a href="https://media.tenor.com/UTCcnL7uoNgAAAAM/cat-gato.gif">¿Olvidaste tu Contraseña?</a><br>
         </div>
-        <button type="submit" class="btn" onclick="window.location.href='index.html'">Ingresar</button>
+        <button type="submit" class="btn">Ingresar</button>
         <div class="registrarse">
             <p>¿Volver al registro de asistencia?</p><a href="index.html">Haz click aqui</a>
         </form>
