@@ -41,6 +41,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  background-color: #ffffff;
 }
 
 /* Icono del menú */
@@ -142,4 +143,100 @@ body{
   color:#fff;
   cursor:pointer;
   font-size:60px;
+}
+
+.contenido {
+  margin-left: 450px; /* espacio para el menú */
+  padding: 20px;
+  margin-top: 100px;;
+}
+
+.contenido h2 {
+  color: #000000;
+  margin-bottom: 20px;
+  font-size: 50px;
+}
+
+.contenido p{
+  font-size: 20px;
+}
+
+
+.formulario {
+  margin-top: 20px;
+  background: rgb(255, 255, 255);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #afd6fc;
+  width: 900px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tarjeta {
+  background: rgb(226, 242, 255);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #afd6fc;
+  width: 900px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tarjeta p {
+  color: #0b1994;
+}
+
+.formulario{
+  margin-top: 20px;
+  background: rgb(255, 255, 255);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #afd6fc;
+  width: 900px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.formulario h3{
+  font-size: 30px;
+  color: #000e8f;
+}
+
+.formulario p{
+  color: #b8b8b8;
+}
+
+.formulario input[type="text"], .formulario input[type="email"]{
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #afd6fc;
+  border-radius: 5px;
+  font-size: 20px;
+}
+.formulario input[type="checkbox"]{
+  margin-right: 10px;
+  transform: scale(1.5);
+
+}
+.formulario textarea{
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #afd6fc;
+  border-radius: 5px;
+  font-size: 20px;
+}
+.formulario button[type="submit"]{
+  background-color: #273ae6;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.formulario label {
+  font-size: 25px;
 }

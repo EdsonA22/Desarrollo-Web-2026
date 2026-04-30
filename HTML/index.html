@@ -28,13 +28,64 @@
     <div class="container-menu">
       <div class="cont-menu">
         <nav>
-          <a href="#"><i class="bx bx-home-alt"></i> Dashboard</a>
-          <a href="#"><i class="bx bx-user"></i> Estudiantes</a>
-          <a href="#"><i class="bx bx-group"></i> Docentes</a>
-          <a href="#"><i class="bx bx-chart-bar-columns"></i> Reportes</a>
+          <a href="index.html"><i class="bx bx-home-alt"></i> Dashboard</a>
+          <a href="estudiantes.html"><i class="bx bx-user"></i> Estudiantes</a>
+          <a href="docentes.html"><i class="bx bx-group"></i> Docentes</a>
+          <a href="reportes.html"><i class="bx bx-chart-bar-columns"></i> Reportes</a>
         </nav>
         <label for="btn-menu" class="bx bx-x-circle"></label>
       </div>
     </div>
+
+    <main class="contenido">
+  <h2>Dashboard</h2>
+  <p>Registra tus necesidades educativas para recibir los ajustes pedagógicos apropiados.</p><br><br>
+
+    <div class="tarjeta">
+      <h3><i class="bx bx-info-circle" style="font-size: 15px;"></i> Información Confidencial</h3><br>
+      <p>Toda la informacion proporcionada es confidencial y solo será compartida con personal docente autorizado para facilitar ajustes razonables</p>
+    </div>
+
+    <div class="formulario">
+      <h3>Formulario de registro de necesidades</h3>
+      <p>Completa la información según tus necesidades educativas</p><br>
+
+      <form action="#" method="post">
+        <label for="nombre">Nombre completo</label><br>
+        <input class="textfield" type="text" id="nombre" name="nombre" required><br><br>
+
+        <label for="correo">Correo institucional</label><br>
+        <input class="textfield" type="email" id="correo" name="correo" required placeholder="estudiante@universidad.edu"><br><br>
+
+        <label for="carrera">Carrera o programa</label><br>
+        <input class="textfield" type="text" id="carrera" name="carrera" required><br><br>
+
+        <h3>Caracteristicas de Discapacidad o Neurodivergencia</h3>
+
+        <p>Selecciona todas las que apliquen a tu situación</p><br>
+
+        <input type="checkbox" id="visual" name="necesidades" value="visual">
+        <label for="visual">Discapacidad Visual</label><br>
+        <p>Cegera, baja visión, daltonismo u otras condiciones visuales</p><br>
+
+        <input type="checkbox" id="auditiva" name="necesidades" value="auditiva">
+        <label for="auditiva">Discapacidad Auditiva</label><br>
+        <p>Sordera, hipoacusia u otras condiciones auditivas</p><br>
+
+        <input type="checkbox" id="cognitiva" name="necesidades" value="cognitiva">
+        <label for="cognitiva">Discapacidad Cognitiva</label><br>
+        <p>Dificultades de aprendizaje, memoria o procesamiento de información</p><br>
+
+        <input type="checkbox" id="neuro" name="necesidades" value="neuro">
+        <label for="neuro">Neurodivergencia</label><br><br>
+        <p>TDAH, TEA, dislexia u otras condiciones neurodivergentes</p><br>
+        
+        <label for="detalles">Detalles adicionales</label><br>
+        <textarea id="detalles" name="detalles" rows="4" placeholder="Ejemplo: Necesito material en formato digital, tiempo extra en exámenes, ubicación cercana al frente del aula..."></textarea><br><br>
+
+        <button type="submit">Guardar información</button>
+    </div>
+</main>
+
   </body>
 </html>
