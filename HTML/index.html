@@ -2,90 +2,116 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>Bienvenido!!!</title>
-    <link href='https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SINAP - Registro de Necesidades</title>
     <link rel="stylesheet" href="../CSS/index.css" />
   </head>
   <body>
-
-    <header class="header">
-      <div class="container">
-        <div class="btn-menu">
-          <label for="btn-menu" class="bx bx-menu-close"></label>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">S</div>
+          <div>
+            <h1>SINAP</h1>
+            <p>Ajustes pedagogicos</p>
+          </div>
         </div>
-        <div class="logo">
-          <h1>SIPNAP</h1>
+        <div class="user-card">
+          <strong id="sessionName">Estudiante</strong>
+          <p>Panel del estudiante</p>
         </div>
-        <p id="frase">Sistema de identificación de necesidades y ajustes pedagógicos</p>
-        <nav class="menu">
-          <a href="../HTML/login.html"><i class="bx bx-door-open-alt" id="close"></i> Cerrar sesión</a>
+        <nav class="nav" aria-label="Navegacion principal">
+          <a class="active" href="index.html">Registro de Necesidades</a>
+          <a href="perfil.html">Mi Perfil</a>
         </nav>
-      </div>
-    </header>
-    
-    <div class="capa"></div>
-    <input type="checkbox" id="btn-menu" />
-    <div class="container-menu">
-      <div class="cont-menu">
-        <nav>
-          <a href="index.html"><i class="bx bx-home-alt"></i> Dashboard</a>
-          <a href="estudiantes.html"><i class="bx bx-user"></i> Estudiantes</a>
-          <a href="docentes.html"><i class="bx bx-group"></i> Docentes</a>
-          <a href="reportes.html"><i class="bx bx-chart-bar-columns"></i> Reportes</a>
-        </nav>
-        <label for="btn-menu" class="bx bx-x-circle"></label>
-      </div>
+        <button class="logout" type="button" id="logoutButton">Cerrar sesion</button>
+      </aside>
+
+      <main class="main">
+        <header class="page-header">
+          <div>
+            <h2>Registro de necesidades</h2>
+            <p class="muted">Completa tu informacion para recibir ajustes pedagogicos personalizados.</p>
+          </div>
+          <span class="badge">WCAG 2.1 AA</span>
+        </header>
+
+        <section class="alert">
+          <strong>Informacion confidencial.</strong>
+          Los datos proporcionados se comparten unicamente con personal docente autorizado para facilitar ajustes razonables.
+        </section>
+
+        <section class="grid two">
+          <article class="card">
+            <h3>Formulario de registro de necesidades</h3>
+            <p class="muted">Selecciona todas las caracteristicas que apliquen a tu situacion.</p>
+            <form id="needsForm">
+              <div>
+                <label for="nombre">Nombre completo</label>
+                <input id="nombre" name="nombre" required />
+              </div>
+              <div>
+                <label for="correo">Correo institucional</label>
+                <input id="correo" name="correo" type="text" inputmode="email" placeholder="estudiante@universidad.edu" required />
+              </div>
+              <div>
+                <label for="carrera">Carrera o programa</label>
+                <input id="carrera" name="carrera" required />
+              </div>
+
+              <fieldset class="checkbox-grid">
+                <legend class="muted">Caracteristicas de discapacidad o neurodivergencia</legend>
+                <label class="check-option"><input type="checkbox" name="necesidades" value="visual" /> Discapacidad visual<p>Ceguera, baja vision, daltonismo u otras condiciones visuales.</p></label>
+                <label class="check-option"><input type="checkbox" name="necesidades" value="auditiva" /> Discapacidad auditiva<p>Sordera, hipoacusia u otras condiciones auditivas.</p></label>
+                <label class="check-option"><input type="checkbox" name="necesidades" value="cognitiva" /> Discapacidad cognitiva<p>Dificultades de aprendizaje, memoria o procesamiento.</p></label>
+                <label class="check-option"><input type="checkbox" name="necesidades" value="motora" /> Discapacidad motora<p>Barreras de movilidad, postura, escritura o traslado.</p></label>
+                <label class="check-option"><input type="checkbox" name="necesidades" value="neuro" /> Neurodivergencia<p>TDAH, TEA, dislexia u otras condiciones neurodivergentes.</p></label>
+              </fieldset>
+
+              <div>
+                <label for="detalles">Detalles adicionales</label>
+                <textarea id="detalles" name="detalles" placeholder="Ejemplo: necesito material digital, tiempo extra en examenes, ubicacion cercana al frente del aula..."></textarea>
+              </div>
+
+              <button class="btn" type="submit">Guardar informacion</button>
+            </form>
+          </article>
+
+          <aside class="card" aria-live="polite">
+            <h3>Recomendaciones generadas</h3>
+            <p class="muted">Apareceran despues de guardar tu informacion.</p>
+            <div id="recommendationResult" class="student-list"></div>
+          </aside>
+        </section>
+
+        <p class="footer-note">Prototipo Sprint 1: persistencia con localStorage, autenticacion simulada y motor basico de recomendaciones.</p>
+      </main>
     </div>
 
-    <main class="contenido">
-  <h2>Dashboard</h2>
-  <p>Registra tus necesidades educativas para recibir los ajustes pedagógicos apropiados.</p><br><br>
+    <script src="../Conexion/app.js"></script>
+    <script>
+      const session = sinap.requireRole(["estudiante"]);
+      if (session) document.getElementById("sessionName").textContent = session.name;
+      document.getElementById("logoutButton").addEventListener("click", sinap.logout);
 
-    <div class="tarjeta">
-      <h3><i class="bx bx-info-circle" style="font-size: 15px;"></i> Información Confidencial</h3><br>
-      <p>Toda la informacion proporcionada es confidencial y solo será compartida con personal docente autorizado para facilitar ajustes razonables</p>
-    </div>
+      const form = document.getElementById("needsForm");
+      const result = document.getElementById("recommendationResult");
 
-    <div class="formulario">
-      <h3>Formulario de registro de necesidades</h3>
-      <p>Completa la información según tus necesidades educativas</p><br>
-
-      <form action="#" method="post">
-        <label for="nombre">Nombre completo</label><br>
-        <input class="textfield" type="text" id="nombre" name="nombre" required><br><br>
-
-        <label for="correo">Correo institucional</label><br>
-        <input class="textfield" type="email" id="correo" name="correo" required placeholder="estudiante@universidad.edu"><br><br>
-
-        <label for="carrera">Carrera o programa</label><br>
-        <input class="textfield" type="text" id="carrera" name="carrera" required><br><br>
-
-        <h3>Caracteristicas de Discapacidad o Neurodivergencia</h3>
-
-        <p>Selecciona todas las que apliquen a tu situación</p><br>
-
-        <input type="checkbox" id="visual" name="necesidades" value="visual">
-        <label for="visual">Discapacidad Visual</label><br>
-        <p>Cegera, baja visión, daltonismo u otras condiciones visuales</p><br>
-
-        <input type="checkbox" id="auditiva" name="necesidades" value="auditiva">
-        <label for="auditiva">Discapacidad Auditiva</label><br>
-        <p>Sordera, hipoacusia u otras condiciones auditivas</p><br>
-
-        <input type="checkbox" id="cognitiva" name="necesidades" value="cognitiva">
-        <label for="cognitiva">Discapacidad Cognitiva</label><br>
-        <p>Dificultades de aprendizaje, memoria o procesamiento de información</p><br>
-
-        <input type="checkbox" id="neuro" name="necesidades" value="neuro">
-        <label for="neuro">Neurodivergencia</label><br><br>
-        <p>TDAH, TEA, dislexia u otras condiciones neurodivergentes</p><br>
-        
-        <label for="detalles">Detalles adicionales</label><br>
-        <textarea id="detalles" name="detalles" rows="4" placeholder="Ejemplo: Necesito material en formato digital, tiempo extra en exámenes, ubicación cercana al frente del aula..."></textarea><br><br>
-
-        <button type="submit">Guardar información</button>
-    </div>
-</main>
-
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const data = new FormData(form);
+        const student = sinap.saveStudent({
+          nombre: data.get("nombre"),
+          correo: data.get("correo"),
+          carrera: data.get("carrera"),
+          necesidades: data.getAll("necesidades"),
+          detalles: data.get("detalles")
+        });
+        result.innerHTML = `
+          <div class="alert success"><strong>Informacion guardada.</strong> Se generaron ${sinap.getRecommendations(student.necesidades).length} recomendaciones iniciales.</div>
+          <ul>${sinap.getRecommendations(student.necesidades).map((item) => `<li>${item}</li>`).join("")}</ul>
+        `;
+      });
+    </script>
   </body>
 </html>

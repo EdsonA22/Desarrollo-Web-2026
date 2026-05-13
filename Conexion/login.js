@@ -1,49 +1,48 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const users = {
+  estudiante: { email: "estudiante@universidad.edu", password: "estudiante123", name: "Maria Gonzalez Lopez", redirect: "index.html" },
+  docente: { email: "docente@universidad.edu", password: "docente123", name: "Dr. Carlos Ramirez", redirect: "docentes.html" },
+  admin: { email: "admin@universidad.edu", password: "admin123", name: "Admin Sistema", redirect: "reportes.html" }
+};
 
-<<<<<<< HEAD
-    //AQUI ESTAN LOS DATOS DEL FIREBASE QUE CREE
-=======
-    //  AQUI ESTAN LOS DATOS DEL FIREBASE QUE CREE
->>>>>>> b67c19a9b5e508f0c13cfcd359bf303391bd790f
-    const firebaseConfig = {
-        apiKey: "AIzaSyBAj-0ii_ok1P50SkMLklKGC2oMuQoJd1o",
-        authDomain: "sinap-6dfb5.firebaseapp.com",
-        projectId: "sinap-6dfb5",
-    };
+let selectedRole = "estudiante";
 
-    // Inicializar Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    console.log("Firebase conectado");
-    const db = getFirestore(app);
-
-// Login
+const roleButtons = document.querySelectorAll("[data-role]");
 const form = document.getElementById("loginForm");
+const emailInput = document.getElementById("correo");
+const passwordInput = document.getElementById("password");
+const credentialBox = document.getElementById("credentials");
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const correo = document.getElementById("correo").value;
-  const password = document.getElementById("password").value;
-
-  try {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      correo,
-      password,
-    );
-    alert("Inicio de sesión exitoso");
-
-            // Redirigir
-           window.location.href = "../HTML/index.html";
-
-        } catch (error) {
-    console.log(error);
-    alert("Error: " + error.message);
+function renderCredentials() {
+  const user = users[selectedRole];
+  credentialBox.innerHTML = `
+    <strong>Credenciales de prueba</strong>
+    <span>Usuario: ${user.email}</span>
+    <span>Clave: ${user.password}</span>
+  `;
+  emailInput.placeholder = user.email;
 }
-    });
+
+roleButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    selectedRole = button.dataset.role;
+    roleButtons.forEach((item) => item.classList.toggle("active", item === button));
+    renderCredentials();
+  });
+});
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const user = users[selectedRole];
+  const email = emailInput.value.trim().toLowerCase();
+  const password = passwordInput.value.trim();
+
+  if (email !== user.email || password !== user.password) {
+    document.getElementById("loginMessage").textContent = "Correo o contrasena incorrectos para el rol seleccionado.";
+    return;
+  }
+
+  localStorage.setItem("sinapSession", JSON.stringify({ role: selectedRole, name: user.name, email: user.email }));
+  window.location.href = user.redirect;
+});
+
+renderCredentials();

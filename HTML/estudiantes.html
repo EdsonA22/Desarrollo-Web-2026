@@ -2,40 +2,76 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>Bienvenido!!!</title>
-    <link href='https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SINAP - Estudiantes</title>
     <link rel="stylesheet" href="../CSS/index.css" />
   </head>
   <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand"><div class="brand-mark">S</div><div><h1>SINAP</h1><p>Ajustes pedagogicos</p></div></div>
+        <div class="user-card"><strong id="sessionName">Admin Sistema</strong><p>Base de datos</p></div>
+        <nav class="nav" aria-label="Navegacion principal">
+          <a class="active" href="estudiantes.html">Estudiantes</a>
+          <a href="docentes.html">Docentes</a>
+          <a href="reportes.html">Reportes</a>
+        </nav>
+        <button class="logout" type="button" id="logoutButton">Cerrar sesion</button>
+      </aside>
 
-    <header class="header">
-      <div class="container">
-        <div class="btn-menu">
-          <label for="btn-menu" class="bx bx-menu-close"></label>
-        </div>
-        <div class="logo">
-          <h1>SIPNAP</h1>
-        </div>
-        <p>Sistema de identificación de necesidades y ajustes pedagógicos</p>
-        <nav class="menu">
-          <a href="../HTML/login.html"><i class="bx bx-door-open-alt" id="close"></i> Cerrar sesión</a>
-        </nav>
-      </div>
-    </header>
-    
-    <div class="capa"></div>
-    <input type="checkbox" id="btn-menu" />
-    <div class="container-menu">
-      <div class="cont-menu">
-        <nav>
-          <a href="index.html"><i class="bx bx-home-alt"></i> Dashboard</a>
-          <a href="estudiantes.html"><i class="bx bx-user"></i> Estudiantes</a>
-          <a href="docentes.html"><i class="bx bx-group"></i> Docentes</a>
-          <a href="reportes.html"><i class="bx bx-chart-bar-columns"></i> Reportes</a>
-        </nav>
-        <label for="btn-menu" class="bx bx-x-circle"></label>
-      </div>
+      <main class="main">
+        <header class="page-header">
+          <div>
+            <h2>Base de datos de estudiantes</h2>
+            <p class="muted">Consulta y administra los perfiles registrados en el prototipo.</p>
+          </div>
+          <a class="secondary-btn" href="index.html">Nuevo registro</a>
+        </header>
+
+        <section class="card">
+          <label for="search">Buscar estudiante</label>
+          <input id="search" placeholder="Nombre, correo o carrera" />
+          <div style="overflow-x: auto; margin-top: 16px">
+            <table>
+              <thead>
+                <tr><th>Nombre</th><th>Carrera</th><th>Necesidades</th><th>Acciones</th></tr>
+              </thead>
+              <tbody id="studentTable"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
     </div>
 
+    <script src="../Conexion/app.js"></script>
+    <script>
+      const session = sinap.requireRole(["admin"]);
+      if (session) document.getElementById("sessionName").textContent = session.name;
+      document.getElementById("logoutButton").addEventListener("click", sinap.logout);
+
+      const search = document.getElementById("search");
+      const table = document.getElementById("studentTable");
+
+      function renderTable() {
+        const term = search.value.toLowerCase();
+        const rows = sinap.getStudents().filter((student) => `${student.nombre} ${student.correo} ${student.carrera}`.toLowerCase().includes(term));
+        table.innerHTML = rows.map((student) => `
+          <tr>
+            <td><strong>${student.nombre}</strong><br><span class="muted">${student.correo}</span></td>
+            <td>${student.carrera}</td>
+            <td>${sinap.formatNeeds(student.necesidades).map((need) => `<span class="badge">${need}</span>`).join("")}</td>
+            <td><button class="danger-btn" type="button" data-delete="${student.id}">Eliminar</button></td>
+          </tr>
+        `).join("");
+      }
+
+      search.addEventListener("input", renderTable);
+      table.addEventListener("click", (event) => {
+        if (!event.target.matches("[data-delete]")) return;
+        sinap.deleteStudent(event.target.dataset.delete);
+        renderTable();
+      });
+      renderTable();
+    </script>
   </body>
 </html>

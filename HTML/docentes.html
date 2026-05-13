@@ -2,40 +2,100 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>Bienvenido!!!</title>
-    <link href='https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SINAP - Panel Docente</title>
     <link rel="stylesheet" href="../CSS/index.css" />
   </head>
   <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand"><div class="brand-mark">S</div><div><h1>SINAP</h1><p>Ajustes pedagogicos</p></div></div>
+        <div class="user-card"><strong id="sessionName">Docente</strong><p>Gestion de aula</p></div>
+        <nav class="nav" aria-label="Navegacion principal">
+          <a class="active" href="docentes.html">Mis estudiantes</a>
+          <a href="reportes.html">Reportes</a>
+        </nav>
+        <button class="logout" type="button" id="logoutButton">Cerrar sesion</button>
+      </aside>
 
-    <header class="header">
-      <div class="container">
-        <div class="btn-menu">
-          <label for="btn-menu" class="bx bx-menu-close"></label>
+      <main class="main">
+        <header class="page-header">
+          <div>
+            <h2>Gestion de ajustes razonables</h2>
+            <p class="muted">Consulta perfiles de apoyo y recomendaciones pedagogicas para tu grupo.</p>
+          </div>
+          <span class="badge">Informacion confidencial</span>
+        </header>
+
+        <section class="grid three" id="metrics"></section>
+
+        <section class="card" style="margin-top: 18px">
+          <h3>Estudiantes con necesidades registradas</h3>
+          <div id="studentList" class="student-list" style="margin-top: 16px"></div>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal" id="recommendationModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-content">
+        <h3 id="modalTitle">Recomendaciones</h3>
+        <div id="modalBody"></div>
+        <section class="alert warning">
+          Las recomendaciones son orientativas y deben adaptarse al contexto de cada asignatura. La informacion del estudiante es confidencial.
+        </section>
+        <div class="modal-actions">
+          <button class="secondary-btn" type="button" id="closeModal">Cerrar</button>
+          <button class="btn" type="button" id="downloadPdf">Descargar PDF</button>
         </div>
-        <div class="logo">
-          <h1>SIPNAP</h1>
-        </div>
-        <p>Sistema de identificación de necesidades y ajustes pedagógicos</p>
-        <nav class="menu">
-          <a href="../HTML/login.html"><i class="bx bx-door-open-alt" id="close"></i> Cerrar sesión</a>
-        </nav>
-      </div>
-    </header>
-    
-    <div class="capa"></div>
-    <input type="checkbox" id="btn-menu" />
-    <div class="container-menu">
-      <div class="cont-menu">
-        <nav>
-          <a href="index.html"><i class="bx bx-home-alt"></i> Dashboard</a>
-          <a href="estudiantes.html"><i class="bx bx-user"></i> Estudiantes</a>
-          <a href="docentes.html"><i class="bx bx-group"></i> Docentes</a>
-          <a href="reportes.html"><i class="bx bx-chart-bar-columns"></i> Reportes</a>
-        </nav>
-        <label for="btn-menu" class="bx bx-x-circle"></label>
       </div>
     </div>
 
+    <script src="../Conexion/app.js"></script>
+    <script>
+      const session = sinap.requireRole(["docente", "admin"]);
+      if (session) document.getElementById("sessionName").textContent = session.name;
+      document.getElementById("logoutButton").addEventListener("click", sinap.logout);
+
+      let selectedStudent = null;
+      const students = sinap.getStudents();
+      const recommendationCount = students.reduce((total, student) => total + sinap.getRecommendations(student.necesidades).length, 0);
+      document.getElementById("metrics").innerHTML = `
+        <article class="card metric"><strong>${students.length}</strong><span>Total de estudiantes</span></article>
+        <article class="card metric"><strong>${students.filter((student) => student.necesidades.length).length}</strong><span>Con necesidades registradas</span></article>
+        <article class="card metric"><strong>${recommendationCount}</strong><span>Recomendaciones generadas</span></article>
+      `;
+
+      function renderStudents() {
+        document.getElementById("studentList").innerHTML = students.map((student) => `
+          <article class="student-row">
+            <div>
+              <h4>${student.nombre}</h4>
+              <p class="muted">${student.carrera} - ${student.correo}</p>
+              <p>${sinap.formatNeeds(student.necesidades).map((need) => `<span class="badge">${need}</span>`).join("")}</p>
+            </div>
+            <button class="btn" type="button" data-id="${student.id}">Ver recomendaciones</button>
+          </article>
+        `).join("");
+      }
+
+      renderStudents();
+
+      document.getElementById("studentList").addEventListener("click", (event) => {
+        if (!event.target.matches("[data-id]")) return;
+        selectedStudent = students.find((student) => student.id === event.target.dataset.id);
+        document.getElementById("modalTitle").textContent = selectedStudent.nombre;
+        document.getElementById("modalBody").innerHTML = `
+          <p><strong>Carrera:</strong> ${selectedStudent.carrera}</p>
+          <p><strong>Correo:</strong> ${selectedStudent.correo}</p>
+          <p>${sinap.formatNeeds(selectedStudent.necesidades).map((need) => `<span class="badge">${need}</span>`).join("")}</p>
+          <h4 style="margin: 18px 0 8px">Ajustes razonables sugeridos</h4>
+          <ul>${sinap.getRecommendations(selectedStudent.necesidades).map((item) => `<li>${item}</li>`).join("")}</ul>
+        `;
+        document.getElementById("recommendationModal").classList.add("open");
+      });
+
+      document.getElementById("closeModal").addEventListener("click", () => document.getElementById("recommendationModal").classList.remove("open"));
+      document.getElementById("downloadPdf").addEventListener("click", () => selectedStudent && sinap.downloadRecommendations(selectedStudent));
+    </script>
   </body>
 </html>
