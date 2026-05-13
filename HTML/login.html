@@ -1,45 +1,61 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SINAP</title>
 
-    <link href='https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../CSS/login.css">
-</head>
+    <link
+      href="https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../CSS/login.css" />
+  </head>
 
-<body>
-<div class="wrapper">
-    <form id="loginForm">
+  <body>
+    <div class="wrapper">
+      <form id="loginForm">
         <i class="bx bx-education" id="logo"></i>
         <h1>SINAP</h1>
         <p>Sistema de identificación de necesidades y ajustes pedagógicos</p>
         <p class="frase">"Apoyando la inclusión y el aprendizaje accesible"</p>
 
         <div class="textfield">
-            <input type="email" id="correo" placeholder="Correo electrónico" required>
-            <i class='bxr bx-user-hexagon'></i> 
+          <input
+            type="email"
+            id="correo"
+            placeholder="Correo electrónico"
+            required
+          />
+          <i class="bxr bx-user-hexagon"></i>
         </div>
 
         <div class="textfield">
-            <input type="password" id="password" placeholder="Contraseña" required>
-            <i class='bxr bx-lock'></i> 
+          <input
+            type="password"
+            id="password"
+            placeholder="Contraseña"
+            required
+          />
+          <i class="bxr bx-lock"></i>
         </div>
 
-        <div class="recordar">
-            <input type="checkbox">
-            <label>Recordarme</label>
+        <div class="Rcheckbox">
+          <label for="recordar">Recordarme</label>
+          <input id="recordar" type="checkbox" />
         </div>
 
         <button type="submit" class="btn">Ingresar</button>
 
         <div class="registrarse">
-            <p>¿Volver al registro de asistencia?</p>
-            <a href="https://i.pinimg.com/736x/a3/a5/e1/a3a5e108fb9ba3a5bd1724f80cecc80a.jpg?nii=t">Haz click aqui</a>
+          <p>¿Volver al registro de asistencia?</p>
+          <a
+            href="https://i.pinimg.com/736x/a3/a5/e1/a3a5e108fb9ba3a5bd1724f80cecc80a.jpg?nii=t"
+            >Haz click aqui</a
+          >
         </div>
-    </form>
-</div>
-<script type="module" src="../Conexion/login.js"></script>
-</body>
+      </form>
+    </div>
+    <script type="module" src="../Conexion/login.js"></script>
+  </body>
 </html>
