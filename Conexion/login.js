@@ -2,7 +2,7 @@
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
     import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    // ⚠️ AQUI ESTAN LOS DATOS DEL FIREBASE QUE CREE
+    // AQUI ESTAN LOS DATOS DEL FIREBASE QUE CREE
     const firebaseConfig = {
         apiKey: "AIzaSyBAj-0ii_ok1P50SkMLklKGC2oMuQoJd1o",
         authDomain: "sinap-6dfb5.firebaseapp.com",
