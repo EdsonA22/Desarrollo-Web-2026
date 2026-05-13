@@ -16,6 +16,7 @@
     // Inicializar Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    console.log("Firebase conectado");
     const db = getFirestore(app);
 
     // Login
@@ -32,9 +33,10 @@
             alert("Inicio de sesión exitoso");
 
             // Redirigir
-            window.location.href = "index.html";
+           window.location.href = "../HTML/index.html";
 
         } catch (error) {
-            alert("Error: " + error.message);
-        }
+    console.log(error);
+    alert("Error: " + error.message);
+}
     });
