@@ -5,7 +5,7 @@
 <<<<<<< HEAD
     //AQUI ESTAN LOS DATOS DEL FIREBASE QUE CREE
 =======
-    // ⚠️ AQUI ESTAN LOS DATOS DEL FIREBASE QUE CREE
+    //  AQUI ESTAN LOS DATOS DEL FIREBASE QUE CREE
 >>>>>>> b67c19a9b5e508f0c13cfcd359bf303391bd790f
     const firebaseConfig = {
         apiKey: "AIzaSyBAj-0ii_ok1P50SkMLklKGC2oMuQoJd1o",
