@@ -5,17 +5,22 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-//AQUI ESTAN LOS DATOS DEL FIREBASE QUE CREE
-const firebaseConfig = {
-  apiKey: "AIzaSyBAj-0ii_ok1P50SkMLklKGC2oMuQoJd1o",
-  authDomain: "sinap-6dfb5.firebaseapp.com",
-  projectId: "sinap-6dfb5",
-};
+<<<<<<< HEAD
+    //AQUI ESTAN LOS DATOS DEL FIREBASE QUE CREE
+=======
+    //  AQUI ESTAN LOS DATOS DEL FIREBASE QUE CREE
+>>>>>>> b67c19a9b5e508f0c13cfcd359bf303391bd790f
+    const firebaseConfig = {
+        apiKey: "AIzaSyBAj-0ii_ok1P50SkMLklKGC2oMuQoJd1o",
+        authDomain: "sinap-6dfb5.firebaseapp.com",
+        projectId: "sinap-6dfb5",
+    };
 
-// Inicializar Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+    // Inicializar Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    console.log("Firebase conectado");
+    const db = getFirestore(app);
 
 // Login
 const form = document.getElementById("loginForm");
@@ -34,9 +39,11 @@ form.addEventListener("submit", async (e) => {
     );
     alert("Inicio de sesión exitoso");
 
-    // Redirigir
-    window.location.href = "index.html";
-  } catch (error) {
+            // Redirigir
+           window.location.href = "../HTML/index.html";
+
+        } catch (error) {
+    console.log(error);
     alert("Error: " + error.message);
-  }
-});
+}
+    });
