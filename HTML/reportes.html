@@ -9,18 +9,30 @@
   <body>
     <div class="app-shell">
       <aside class="sidebar">
-        <div class="brand"><div class="brand-mark">S</div><div><h1>SINAP</h1><p>Ajustes pedagogicos</p></div></div>
-        <div class="user-card"><strong id="sessionName">Usuario</strong><p id="sessionRole">Panel de reportes</p></div>
-        <nav class="nav" aria-label="Navegacion principal" id="roleNav">
-        </nav>
-        <button class="logout" type="button" id="logoutButton">Cerrar sesion</button>
+        <div class="brand">
+          <div class="brand-mark">S</div>
+          <div>
+            <h1>SINAP</h1>
+            <p>Ajustes pedagogicos</p>
+          </div>
+        </div>
+        <div class="user-card">
+          <strong id="sessionName">Usuario</strong>
+          <p id="sessionRole">Panel de reportes</p>
+        </div>
+        <nav class="nav" aria-label="Navegacion principal" id="roleNav"></nav>
+        <button class="logout" type="button" id="logoutButton">
+          Cerrar sesion
+        </button>
       </aside>
 
       <main class="main">
         <header class="page-header">
           <div>
             <h2>Reportes administrativos</h2>
-            <p class="muted">Vision estadistica del impacto del sistema en inclusion educativa.</p>
+            <p class="muted">
+              Vision estadistica del impacto del sistema en inclusion educativa.
+            </p>
           </div>
           <span class="badge">Cobertura excelente</span>
         </header>
@@ -30,8 +42,16 @@
         <section class="grid two" style="margin-top: 18px">
           <article class="card">
             <h3>Distribucion de necesidades</h3>
-            <div class="donut" aria-label="Grafico de pastel de necesidades"></div>
-            <p><span class="badge">Visual 30%</span><span class="badge">Neurodivergencia 26%</span><span class="badge">Cognitiva 25%</span><span class="badge">Auditiva 19%</span></p>
+            <div
+              class="donut"
+              aria-label="Grafico de pastel de necesidades"
+            ></div>
+            <p>
+              <span class="badge">Visual 30%</span
+              ><span class="badge">Neurodivergencia 26%</span
+              ><span class="badge">Cognitiva 25%</span
+              ><span class="badge">Auditiva 19%</span>
+            </p>
           </article>
 
           <article class="card">
@@ -52,7 +72,8 @@
               <div style="height: 175px">Jun</div>
             </div>
             <section class="alert success" style="margin-top: 16px">
-              Mantener campanas de sensibilizacion ante el crecimiento sostenido de registros.
+              Mantener campanas de sensibilizacion ante el crecimiento sostenido
+              de registros.
             </section>
           </article>
 
@@ -70,34 +91,6 @@
     </div>
 
     <script src="../Conexion/app.js"></script>
-    <script>
-      const session = sinap.requireRole(["docente", "admin"]);
-      if (session) {
-        document.getElementById("sessionName").textContent = session.name;
-        document.getElementById("sessionRole").textContent = session.role === "docente" ? "Panel docente" : "Panel administrador";
-        document.getElementById("roleNav").innerHTML = session.role === "docente"
-          ? `<a href="docentes.html">Mis estudiantes</a><a class="active" href="reportes.html">Reportes</a>`
-          : `<a href="estudiantes.html">Estudiantes</a><a href="docentes.html">Docentes</a><a class="active" href="reportes.html">Reportes</a>`;
-      }
-      document.getElementById("logoutButton").addEventListener("click", sinap.logout);
-
-      const students = sinap.getStudents();
-      const recommendations = students.reduce((total, student) => total + sinap.getRecommendations(student.necesidades).length, 0);
-      document.getElementById("kpis").innerHTML = `
-        <article class="card metric"><strong>${Math.max(150, students.length)}</strong><span>Total estudiantes - +12%</span></article>
-        <article class="card metric"><strong>${Math.max(324, recommendations)}</strong><span>Recomendaciones</span></article>
-        <article class="card metric"><strong>18</strong><span>Docentes activos</span></article>
-        <article class="card metric"><strong>94%</strong><span>Tasa de inclusion</span></article>
-      `;
-
-      const careers = students.reduce((acc, student) => {
-        acc[student.carrera] = (acc[student.carrera] || 0) + 1;
-        return acc;
-      }, {});
-      const max = Math.max(...Object.values(careers), 1);
-      document.getElementById("careerBars").innerHTML = Object.entries(careers).map(([career, count]) => `
-        <div class="bar"><span>${career}</span><span style="width:${Math.max(24, (count / max) * 100)}%"></span><strong>${count}</strong></div>
-      `).join("");
-    </script>
+    <script src="../Conexion/reportesdocente.js"></script>
   </body>
 </html>

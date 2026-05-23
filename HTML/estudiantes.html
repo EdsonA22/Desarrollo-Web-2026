@@ -9,21 +9,34 @@
   <body>
     <div class="app-shell">
       <aside class="sidebar">
-        <div class="brand"><div class="brand-mark">S</div><div><h1>SINAP</h1><p>Ajustes pedagogicos</p></div></div>
-        <div class="user-card"><strong id="sessionName">Admin Sistema</strong><p>Base de datos</p></div>
+        <div class="brand">
+          <div class="brand-mark">S</div>
+          <div>
+            <h1>SINAP</h1>
+            <p>Ajustes pedagogicos</p>
+          </div>
+        </div>
+        <div class="user-card">
+          <strong id="sessionName">Admin Sistema</strong>
+          <p>Base de datos</p>
+        </div>
         <nav class="nav" aria-label="Navegacion principal">
           <a class="active" href="estudiantes.html">Estudiantes</a>
           <a href="docentes.html">Docentes</a>
           <a href="reportes.html">Reportes</a>
         </nav>
-        <button class="logout" type="button" id="logoutButton">Cerrar sesion</button>
+        <button class="logout" type="button" id="logoutButton">
+          Cerrar sesion
+        </button>
       </aside>
 
       <main class="main">
         <header class="page-header">
           <div>
             <h2>Base de datos de estudiantes</h2>
-            <p class="muted">Consulta y administra los perfiles registrados en el prototipo.</p>
+            <p class="muted">
+              Consulta y administra los perfiles registrados en el prototipo.
+            </p>
           </div>
           <a class="secondary-btn" href="index.html">Nuevo registro</a>
         </header>
@@ -34,7 +47,12 @@
           <div style="overflow-x: auto; margin-top: 16px">
             <table>
               <thead>
-                <tr><th>Nombre</th><th>Carrera</th><th>Necesidades</th><th>Acciones</th></tr>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Carrera</th>
+                  <th>Necesidades</th>
+                  <th>Acciones</th>
+                </tr>
               </thead>
               <tbody id="studentTable"></tbody>
             </table>
@@ -44,34 +62,6 @@
     </div>
 
     <script src="../Conexion/app.js"></script>
-    <script>
-      const session = sinap.requireRole(["admin"]);
-      if (session) document.getElementById("sessionName").textContent = session.name;
-      document.getElementById("logoutButton").addEventListener("click", sinap.logout);
-
-      const search = document.getElementById("search");
-      const table = document.getElementById("studentTable");
-
-      function renderTable() {
-        const term = search.value.toLowerCase();
-        const rows = sinap.getStudents().filter((student) => `${student.nombre} ${student.correo} ${student.carrera}`.toLowerCase().includes(term));
-        table.innerHTML = rows.map((student) => `
-          <tr>
-            <td><strong>${student.nombre}</strong><br><span class="muted">${student.correo}</span></td>
-            <td>${student.carrera}</td>
-            <td>${sinap.formatNeeds(student.necesidades).map((need) => `<span class="badge">${need}</span>`).join("")}</td>
-            <td><button class="danger-btn" type="button" data-delete="${student.id}">Eliminar</button></td>
-          </tr>
-        `).join("");
-      }
-
-      search.addEventListener("input", renderTable);
-      table.addEventListener("click", (event) => {
-        if (!event.target.matches("[data-delete]")) return;
-        sinap.deleteStudent(event.target.dataset.delete);
-        renderTable();
-      });
-      renderTable();
-    </script>
+    <script src="../Conexion/estudianteslog.js"></script>
   </body>
 </html>

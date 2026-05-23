@@ -24,27 +24,35 @@
           <a class="active" href="index.html">Registro de Necesidades</a>
           <a href="perfil.html">Mi Perfil</a>
         </nav>
-        <button class="logout" type="button" id="logoutButton">Cerrar sesion</button>
+        <button class="logout" type="button" id="logoutButton">
+          Cerrar sesion
+        </button>
       </aside>
 
       <main class="main">
         <header class="page-header">
           <div>
             <h2>Registro de necesidades</h2>
-            <p class="muted">Completa tu informacion para recibir ajustes pedagogicos personalizados.</p>
+            <p class="muted">
+              Completa tu informacion para recibir ajustes pedagogicos
+              personalizados.
+            </p>
           </div>
           <span class="badge">WCAG 2.1 AA</span>
         </header>
 
         <section class="alert">
           <strong>Informacion confidencial.</strong>
-          Los datos proporcionados se comparten unicamente con personal docente autorizado para facilitar ajustes razonables.
+          Los datos proporcionados se comparten unicamente con personal docente
+          autorizado para facilitar ajustes razonables.
         </section>
 
         <section class="grid two">
           <article class="card">
             <h3>Formulario de registro de necesidades</h3>
-            <p class="muted">Selecciona todas las caracteristicas que apliquen a tu situacion.</p>
+            <p class="muted">
+              Selecciona todas las caracteristicas que apliquen a tu situacion.
+            </p>
             <form id="needsForm">
               <div>
                 <label for="nombre">Nombre completo</label>
@@ -52,7 +60,14 @@
               </div>
               <div>
                 <label for="correo">Correo institucional</label>
-                <input id="correo" name="correo" type="text" inputmode="email" placeholder="estudiante@universidad.edu" required />
+                <input
+                  id="correo"
+                  name="correo"
+                  type="text"
+                  inputmode="email"
+                  placeholder="estudiante@universidad.edu"
+                  required
+                />
               </div>
               <div>
                 <label for="carrera">Carrera o programa</label>
@@ -60,17 +75,58 @@
               </div>
 
               <fieldset class="checkbox-grid">
-                <legend class="muted">Caracteristicas de discapacidad o neurodivergencia</legend>
-                <label class="check-option"><input type="checkbox" name="necesidades" value="visual" /> Discapacidad visual<p>Ceguera, baja vision, daltonismo u otras condiciones visuales.</p></label>
-                <label class="check-option"><input type="checkbox" name="necesidades" value="auditiva" /> Discapacidad auditiva<p>Sordera, hipoacusia u otras condiciones auditivas.</p></label>
-                <label class="check-option"><input type="checkbox" name="necesidades" value="cognitiva" /> Discapacidad cognitiva<p>Dificultades de aprendizaje, memoria o procesamiento.</p></label>
-                <label class="check-option"><input type="checkbox" name="necesidades" value="motora" /> Discapacidad motora<p>Barreras de movilidad, postura, escritura o traslado.</p></label>
-                <label class="check-option"><input type="checkbox" name="necesidades" value="neuro" /> Neurodivergencia<p>TDAH, TEA, dislexia u otras condiciones neurodivergentes.</p></label>
+                <legend class="muted">
+                  Caracteristicas de discapacidad o neurodivergencia
+                </legend>
+                <label class="check-option"
+                  ><input type="checkbox" name="necesidades" value="visual" />
+                  Discapacidad visual
+                  <p>
+                    Ceguera, baja vision, daltonismo u otras condiciones
+                    visuales.
+                  </p></label
+                >
+                <label class="check-option"
+                  ><input type="checkbox" name="necesidades" value="auditiva" />
+                  Discapacidad auditiva
+                  <p>
+                    Sordera, hipoacusia u otras condiciones auditivas.
+                  </p></label
+                >
+                <label class="check-option"
+                  ><input
+                    type="checkbox"
+                    name="necesidades"
+                    value="cognitiva"
+                  />
+                  Discapacidad cognitiva
+                  <p>
+                    Dificultades de aprendizaje, memoria o procesamiento.
+                  </p></label
+                >
+                <label class="check-option"
+                  ><input type="checkbox" name="necesidades" value="motora" />
+                  Discapacidad motora
+                  <p>
+                    Barreras de movilidad, postura, escritura o traslado.
+                  </p></label
+                >
+                <label class="check-option"
+                  ><input type="checkbox" name="necesidades" value="neuro" />
+                  Neurodivergencia
+                  <p>
+                    TDAH, TEA, dislexia u otras condiciones neurodivergentes.
+                  </p></label
+                >
               </fieldset>
 
               <div>
                 <label for="detalles">Detalles adicionales</label>
-                <textarea id="detalles" name="detalles" placeholder="Ejemplo: necesito material digital, tiempo extra en examenes, ubicacion cercana al frente del aula..."></textarea>
+                <textarea
+                  id="detalles"
+                  name="detalles"
+                  placeholder="Ejemplo: necesito material digital, tiempo extra en examenes, ubicacion cercana al frente del aula..."
+                ></textarea>
               </div>
 
               <button class="btn" type="submit">Guardar informacion</button>
@@ -84,34 +140,14 @@
           </aside>
         </section>
 
-        <p class="footer-note">Prototipo Sprint 1: persistencia con localStorage, autenticacion simulada y motor basico de recomendaciones.</p>
+        <p class="footer-note">
+          Prototipo Sprint 1: persistencia con localStorage, autenticacion
+          simulada y motor basico de recomendaciones.
+        </p>
       </main>
     </div>
 
     <script src="../Conexion/app.js"></script>
-    <script>
-      const session = sinap.requireRole(["estudiante"]);
-      if (session) document.getElementById("sessionName").textContent = session.name;
-      document.getElementById("logoutButton").addEventListener("click", sinap.logout);
-
-      const form = document.getElementById("needsForm");
-      const result = document.getElementById("recommendationResult");
-
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const data = new FormData(form);
-        const student = sinap.saveStudent({
-          nombre: data.get("nombre"),
-          correo: data.get("correo"),
-          carrera: data.get("carrera"),
-          necesidades: data.getAll("necesidades"),
-          detalles: data.get("detalles")
-        });
-        result.innerHTML = `
-          <div class="alert success"><strong>Informacion guardada.</strong> Se generaron ${sinap.getRecommendations(student.necesidades).length} recomendaciones iniciales.</div>
-          <ul>${sinap.getRecommendations(student.necesidades).map((item) => `<li>${item}</li>`).join("")}</ul>
-        `;
-      });
-    </script>
+    <script src="../Conexion/indexestudiante.js"></script>
   </body>
 </html>
