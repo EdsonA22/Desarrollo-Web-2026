@@ -177,6 +177,20 @@ a {
   box-shadow: 0 8px 24px rgba(25, 45, 80, 0.06);
 }
 
+.profile-summary {
+  display: grid;
+  gap: 4px;
+  margin: 14px 0 18px;
+  padding: 14px;
+  border: 1px solid #dce5f2;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.profile-summary span {
+  color: #5e6c84;
+}
+
 .metric strong {
   display: block;
   font-size: 32px;
@@ -346,7 +360,12 @@ th {
   width: 210px;
   height: 210px;
   border-radius: 50%;
-  background: conic-gradient(#1554d1 0 30%, #20a779 30% 56%, #f2b705 56% 81%, #d94f4f 81% 100%);
+  background: conic-gradient(
+    #1554d1 0 30%,
+    #20a779 30% 56%,
+    #f2b705 56% 81%,
+    #d94f4f 81% 100%
+  );
   margin: 16px auto;
   position: relative;
 }

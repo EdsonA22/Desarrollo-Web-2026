@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SINAP - Panel Docente</title>
+    <title>SINAP - Docentes</title>
     <link rel="stylesheet" href="../CSS/index.css" />
   </head>
   <body>
@@ -18,38 +18,140 @@
         </div>
         <div class="user-card">
           <strong id="sessionName">Docente</strong>
-          <p>Gestion de aula</p>
+          <p id="sessionRole">Gestion de aula</p>
         </div>
-        <nav class="nav" aria-label="Navegacion principal">
-          <a class="active" href="docentes.html">Mis estudiantes</a>
-          <a href="reportes.html">Reportes</a>
-        </nav>
+        <nav class="nav" aria-label="Navegacion principal" id="roleNav"></nav>
         <button class="logout" type="button" id="logoutButton">
           Cerrar sesion
         </button>
       </aside>
 
       <main class="main">
-        <header class="page-header">
-          <div>
-            <h2>Gestion de ajustes razonables</h2>
-            <p class="muted">
-              Consulta perfiles de apoyo y recomendaciones pedagogicas para tu
-              grupo.
-            </p>
-          </div>
-          <span class="badge">Informacion confidencial</span>
-        </header>
+        <section id="teacherPanel">
+          <header class="page-header">
+            <div>
+              <h2>Perfil docente</h2>
+              <p class="muted">
+                Consulta tus datos, carreras asignadas y estudiantes a cargo.
+              </p>
+            </div>
+            <span class="badge">Informacion confidencial</span>
+          </header>
 
-        <section class="grid three" id="metrics"></section>
+          <section class="grid three" id="metrics"></section>
 
-        <section class="card" style="margin-top: 18px">
-          <h3>Estudiantes con necesidades registradas</h3>
-          <div
-            id="studentList"
-            class="student-list"
-            style="margin-top: 16px"
-          ></div>
+          <section class="grid two" style="margin-top: 18px">
+            <article class="card">
+              <h3>Datos del docente</h3>
+              <div id="teacherProfile"></div>
+            </article>
+
+            <article class="card">
+              <h3>Asignacion de alumnos</h3>
+              <p class="muted">
+                Los alumnos se asignan desde Administrador &gt; Estudiantes,
+                seleccionando docente y carrera. Tambien aparecen aqui alumnos
+                sin docente directo cuando pertenecen a una carrera que
+                atiendes.
+              </p>
+            </article>
+          </section>
+
+          <section class="card" style="margin-top: 18px">
+            <h3>Mis estudiantes con necesidades registradas</h3>
+            <div
+              id="studentList"
+              class="student-list"
+              style="margin-top: 16px"
+            ></div>
+          </section>
+        </section>
+
+        <section id="adminTeacherPanel" hidden>
+          <header class="page-header">
+            <div>
+              <h2>Base de datos de docentes</h2>
+              <p class="muted">
+                Consulta, registra y edita los perfiles docentes del sistema.
+              </p>
+            </div>
+            <span class="badge">Administrador</span>
+          </header>
+
+          <section class="grid two">
+            <article class="card">
+              <h3>Registrar docente</h3>
+              <form id="teacherAdminForm">
+                <input type="hidden" id="teacherEditEmail" />
+
+                <div>
+                  <label for="teacherName">Nombre completo</label>
+                  <input id="teacherName" required />
+                </div>
+
+                <div>
+                  <label for="teacherEmail">Correo institucional</label>
+                  <input
+                    id="teacherEmail"
+                    type="text"
+                    inputmode="email"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label for="teacherPassword">Contraseña</label>
+                  <input id="teacherPassword" type="password" required />
+                </div>
+
+                <div>
+                  <label for="teacherCareers">Carreras que atiende</label>
+                  <input
+                    id="teacherCareers"
+                    placeholder="Ejemplo: Ingenieria, Administracion"
+                    required
+                  />
+                </div>
+
+                <button class="btn" type="submit">Guardar docente</button>
+                <button
+                  class="secondary-btn"
+                  type="button"
+                  id="clearTeacherForm"
+                >
+                  Limpiar
+                </button>
+                <p id="teacherFormMessage" class="muted"></p>
+              </form>
+            </article>
+
+            <article class="card">
+              <h3>Como se asignan alumnos</h3>
+              <p class="muted">
+                Primero registra al docente y sus carreras. Despues entra a
+                Estudiantes, crea o edita al alumno y selecciona el docente
+                responsable. Esa relacion controla lo que ve cada docente.
+              </p>
+            </article>
+          </section>
+
+          <section class="card" style="margin-top: 18px">
+            <label for="teacherSearch">Buscar docente</label>
+            <input id="teacherSearch" placeholder="Nombre, correo o carrera" />
+            <div style="overflow-x: auto; margin-top: 16px">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Carreras</th>
+                    <th>Alumnos asignados</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="teacherTable"></tbody>
+              </table>
+            </div>
+          </section>
         </section>
       </main>
     </div>

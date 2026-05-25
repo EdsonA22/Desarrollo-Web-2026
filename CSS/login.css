@@ -62,10 +62,18 @@ h1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
+  margin-bottom: 12px;
+}
+
+.mode-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
   margin-bottom: 22px;
 }
 
-.role-tabs button {
+.role-tabs button,
+.mode-tabs button {
   border: 1px solid #b9c9e8;
   background: #f7faff;
   color: #243653;
@@ -76,7 +84,9 @@ h1 {
 }
 
 .role-tabs button.active,
-.role-tabs button:focus {
+.role-tabs button:focus,
+.mode-tabs button.active,
+.mode-tabs button:focus {
   background: #1554d1;
   color: #ffffff;
   outline: 3px solid #9cc3ff;
@@ -88,7 +98,8 @@ label {
   margin-bottom: 8px;
 }
 
-input {
+input,
+select {
   width: 100%;
   border: 1px solid #9eb2d4;
   border-radius: 8px;
@@ -98,7 +109,8 @@ input {
   background: #ffffff;
 }
 
-input:focus {
+input:focus,
+select:focus {
   outline: 3px solid #9cc3ff;
   border-color: #1554d1;
 }

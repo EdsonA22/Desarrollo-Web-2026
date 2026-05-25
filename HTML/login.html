@@ -12,61 +12,117 @@
         <div class="login-card">
           <div class="brand-icon" aria-hidden="true">SIN</div>
           <h1>SINAP</h1>
-          <p class="subtitle">Sistema de Identificacion de Necesidades y Ajustes Pedagogicos</p>
+          <p class="subtitle">
+            Sistema de Identificacion de Necesidades y Ajustes Pedagogicos
+          </p>
           <p class="slogan">Apoyando la inclusion y el aprendizaje accesible</p>
-
           <div class="role-tabs" aria-label="Seleccion de rol">
-            <button type="button" class="active" data-role="estudiante">Estudiante</button>
+            <button type="button" class="active" data-role="estudiante">
+              Estudiante
+            </button>
             <button type="button" data-role="docente">Docente</button>
             <button type="button" data-role="admin">Admin</button>
           </div>
-
+          <div class="mode-tabs" aria-label="Modo de acceso"></div>
           <form id="loginForm">
             <label for="correo">Email institucional</label>
-            <input id="correo" type="text" inputmode="email" autocomplete="username" required />
-
-            <label for="password">Contrasena</label>
-            <input id="password" type="password" autocomplete="current-password" required />
-
+            <input
+              id="correo"
+              type="text"
+              inputmode="email"
+              autocomplete="username"
+              required
+            />
+            <label for="password">Contraseña</label>
+            <input
+              id="password"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
             <label class="remember">
-              <input type="checkbox" />
-              <span>Recordarme</span>
+              <input type="checkbox" /> <span>Recordarme</span>
             </label>
-
             <button class="btn" type="submit">Iniciar sesion</button>
             <p id="loginMessage" class="message" role="alert"></p>
           </form>
-
+          <form id="registerForm" hidden>
+            <label for="registerName">Nombre completo</label>
+            <input id="registerName" type="text" autocomplete="name" required />
+            <label for="registerEmail">Email institucional</label>
+            <input
+              id="registerEmail"
+              type="text"
+              inputmode="email"
+              autocomplete="username"
+              required
+            />
+            <label for="registerPassword">Contraseña</label>
+            <input
+              id="registerPassword"
+              type="password"
+              autocomplete="new-password"
+              required
+            />
+            <div id="studentRegisterFields">
+              <label for="registerCareer">Carrera o programa</label>
+              <input id="registerCareer" type="text" />
+              <label for="registerTeacher">Docente asignado</label>
+              <select id="registerTeacher"></select>
+            </div>
+            <div id="teacherRegisterFields" hidden>
+              <label for="registerCareers">Carreras que atiende</label>
+              <input
+                id="registerCareers"
+                type="text"
+                placeholder="Ejemplo: Ingenieria, Administracion"
+              />
+            </div>
+            <button class="btn" type="submit">Crear perfil</button>
+            <p id="registerMessage" class="message" role="alert"></p>
+          </form>
           <div id="credentials" class="credentials" aria-live="polite"></div>
         </div>
       </section>
-
       <section class="features" aria-labelledby="features-title">
         <h2 id="features-title">Caracteristicas del Sistema</h2>
-        <p>Plataforma centrada en el estudiante para registrar necesidades, generar ajustes razonables y apoyar el trabajo docente con informacion clara y confidencial.</p>
-
+        <p>
+          Plataforma centrada en el estudiante para registrar necesidades,
+          generar ajustes razonables y apoyar el trabajo docente con informacion
+          clara y confidencial.
+        </p>
         <div class="feature-grid">
           <article class="feature">
             <h3>Identificacion de Necesidades</h3>
-            <p>Registro y analisis de condiciones visuales, auditivas, cognitivas, motoras y neurodivergencias para crear perfiles personalizados.</p>
+            <p>
+              Registro y analisis de condiciones visuales, auditivas,
+              cognitivas, motoras y neurodivergencias para crear perfiles
+              personalizados.
+            </p>
           </article>
           <article class="feature">
             <h3>Accesibilidad e Inclusion</h3>
-            <p>Interfaz legible, responsive, navegable por teclado y preparada con contraste alto siguiendo criterios WCAG 2.1 AA.</p>
+            <p>
+              Interfaz legible, responsive, navegable por teclado y preparada
+              con contraste alto siguiendo criterios WCAG 2.1 AA.
+            </p>
           </article>
           <article class="feature">
             <h3>Recomendaciones Pedagogicas</h3>
-            <p>Motor de reglas que propone ajustes razonables y estrategias didacticas inclusivas para facilitar la labor docente.</p>
+            <p>
+              Motor de reglas que propone ajustes razonables y estrategias
+              didacticas inclusivas para facilitar la labor docente.
+            </p>
           </article>
         </div>
-
         <div class="security">
-          <strong>Privacidad y confidencialidad.</strong>
-          La informacion sensible se simula de forma local y solo se muestra a roles autorizados dentro del prototipo.
+          <strong>Privacidad y confidencialidad.</strong> La informacion
+          sensible se simula de forma local y solo se muestra a roles
+          autorizados dentro del prototipo.
         </div>
       </section>
     </main>
-
+    <script src="../Conexion/app.js"></script>
     <script src="../Conexion/login.js"></script>
   </body>
 </html>
