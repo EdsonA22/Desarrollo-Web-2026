@@ -26,6 +26,9 @@ function countAssignedStudents(email) {
 function renderTeacherDashboard() {
   const teacher = sinap.getUserByEmail("docente", session.email);
   const students = sinap.getStudentsForTeacher(session.email);
+  const studentsWithNeeds = students.filter(
+    (student) => student.necesidades.length,
+  );
   const recommendationCount = students.reduce(
     (total, student) =>
       total + sinap.getRecommendations(student.necesidades).length,
@@ -49,13 +52,13 @@ function renderTeacherDashboard() {
   `;
 
   document.getElementById("studentList").innerHTML = students.length
-    ? students
+    ? studentsWithNeeds
         .map(
           (student) => `
         <article class="student-row">
           <div>
             <h4>${sinap.escapeHtml(student.nombre)}</h4>
-            <p class="muted">${sinap.escapeHtml(student.carrera)} - ${sinap.escapeHtml(student.correo)}</p>
+            <p class="muted">${sinap.escapeHtml(student.carrera)} - Seccion ${sinap.escapeHtml(student.seccion)} - Periodo ${sinap.escapeHtml(student.periodo)} - ${sinap.escapeHtml(student.correo)}</p>
             <p>${sinap
               .formatNeeds(student.necesidades)
               .map(
@@ -70,6 +73,11 @@ function renderTeacherDashboard() {
         )
         .join("")
     : `<div class="alert warning"><strong>Sin alumnos asignados.</strong> El administrador debe asignar estudiantes desde la base de datos.</div>`;
+
+  if (students.length && !studentsWithNeeds.length) {
+    document.getElementById("studentList").innerHTML =
+      `<div class="alert warning"><strong>Sin necesidades registradas.</strong> Tus estudiantes asignados aun no han registrado necesidades educativas.</div>`;
+  }
 }
 
 function renderTeacherTable() {
@@ -209,6 +217,8 @@ function setupTeacherStudents() {
     document.getElementById("modalTitle").textContent = selectedStudent.nombre;
     document.getElementById("modalBody").innerHTML = `
       <p><strong>Carrera:</strong> ${sinap.escapeHtml(selectedStudent.carrera)}</p>
+      <p><strong>Seccion:</strong> ${sinap.escapeHtml(selectedStudent.seccion)}</p>
+      <p><strong>Periodo:</strong> ${sinap.escapeHtml(selectedStudent.periodo)}</p>
       <p><strong>Correo:</strong> ${sinap.escapeHtml(selectedStudent.correo)}</p>
       <p>${sinap
         .formatNeeds(selectedStudent.necesidades)

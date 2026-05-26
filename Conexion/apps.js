@@ -5,26 +5,38 @@ console.log(db);
 
 import {
   collection,
-  addDoc,
+  doc,
   getDocs,
+  setDoc,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 // GUARDAR ESTUDIANTE
 
 async function saveStudent(student) {
   try {
-    await addDoc(collection(db, "estudiantes"), {
+    const studentId = String(student.correo || Date.now())
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9_-]/g, "_");
+
+    await setDoc(doc(db, "estudiantes", studentId), {
       nombre: student.nombre,
       correo: student.correo,
       carrera: student.carrera,
+      seccion: student.seccion,
+      periodo: student.periodo,
+      docenteCorreo: student.docenteCorreo || "",
       necesidades: student.necesidades,
       detalles: student.detalles,
-      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }, {
+      merge: true,
     });
 
-    alert("Estudiante guardado correctamente");
+    return true;
   } catch (error) {
     console.error("Error al guardar:", error);
+    return false;
   }
 }
 
@@ -46,7 +58,7 @@ async function getStudents() {
 }
 
 // Exportar funciones globales
-window.sinap = {
+window.sinapFirebase = {
   saveStudent,
   getStudents,
 };

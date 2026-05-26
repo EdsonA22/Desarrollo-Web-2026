@@ -76,6 +76,12 @@ function syncRoleFields() {
   document.getElementById("registerCareer").required =
     selectedRole === "estudiante";
 
+  document.getElementById("registerSection").required =
+    selectedRole === "estudiante";
+
+  document.getElementById("registerPeriod").required =
+    selectedRole === "estudiante";
+
   document.getElementById("registerCareers").required =
     selectedRole === "docente";
 
@@ -166,6 +172,10 @@ registerForm.addEventListener("submit", (event) => {
   if (selectedRole === "estudiante") {
     user.carrera = document.getElementById("registerCareer").value.trim();
 
+    user.seccion = document.getElementById("registerSection").value.trim();
+
+    user.periodo = document.getElementById("registerPeriod").value.trim();
+
     user.docenteCorreo = registerTeacher.value;
   }
 
@@ -182,6 +192,8 @@ registerForm.addEventListener("submit", (event) => {
       nombre: savedUser.name,
       correo: savedUser.email,
       carrera: savedUser.carrera,
+      seccion: savedUser.seccion,
+      periodo: savedUser.periodo,
       docenteCorreo: savedUser.docenteCorreo,
       necesidades: [],
       detalles: "",

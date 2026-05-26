@@ -50,6 +50,8 @@ const sampleUsers = [
     email: "estudiante@universidad.edu",
     password: "estudiante123",
     carrera: "Ingenieria en Sistemas",
+    seccion: "A",
+    periodo: "2026-1",
     docenteCorreo: "docente@universidad.edu",
   },
   {
@@ -75,6 +77,8 @@ const sampleStudents = [
     nombre: "Maria Gonzalez Lopez",
     correo: "estudiante@universidad.edu",
     carrera: "Ingenieria en Sistemas",
+    seccion: "A",
+    periodo: "2026-1",
     docenteCorreo: "docente@universidad.edu",
     necesidades: ["visual", "neuro"],
     detalles: "Requiere materiales digitales accesibles y tiempo adicional.",
@@ -85,6 +89,8 @@ const sampleStudents = [
     nombre: "Sofia Martinez Torres",
     correo: "sofia.martinez@universidad.edu",
     carrera: "Administracion",
+    seccion: "B",
+    periodo: "2026-1",
     docenteCorreo: "docente@universidad.edu",
     necesidades: ["auditiva"],
     detalles: "Prefiere instrucciones por escrito y apoyos visuales.",
@@ -95,6 +101,8 @@ const sampleStudents = [
     nombre: "Luis Hernandez Diaz",
     correo: "luis.hernandez@universidad.edu",
     carrera: "Psicologia",
+    seccion: "C",
+    periodo: "2026-2",
     docenteCorreo: "",
     necesidades: ["cognitiva", "motora"],
     detalles: "Necesita instrucciones por pasos y entregas digitales.",
@@ -203,6 +211,23 @@ function getTeacherLabel(email) {
   return teacher ? teacher.name : "Sin docente asignado";
 }
 
+function normalizeStudentRecord(student = {}) {
+  return {
+    ...student,
+    nombre: student.nombre || "",
+    correo: normalizeEmail(student.correo || ""),
+    carrera: student.carrera || "",
+    seccion: student.seccion || "Sin seccion",
+    periodo: student.periodo || "Sin periodo",
+    docenteCorreo: normalizeEmail(student.docenteCorreo || ""),
+    docenteNombre: student.docenteNombre || "",
+    necesidades: Array.isArray(student.necesidades)
+      ? student.necesidades
+      : [],
+    detalles: student.detalles || "",
+  };
+}
+
 function saveUser(user) {
   const users = getUsers();
   const email = normalizeEmail(user.email);
@@ -227,6 +252,8 @@ function saveUser(user) {
 
   if (role === "estudiante") {
     record.carrera = (user.carrera || previous.carrera || "").trim();
+    record.seccion = (user.seccion || previous.seccion || "").trim();
+    record.periodo = (user.periodo || previous.periodo || "").trim();
     record.docenteCorreo = normalizeEmail(
       Object.prototype.hasOwnProperty.call(user, "docenteCorreo")
         ? user.docenteCorreo
@@ -268,7 +295,15 @@ function deleteUser(email, role) {
 
 function getStudents() {
   seedStudents();
-  return readStorage(STORAGE_KEY, []);
+  return readStorage(STORAGE_KEY, []).map(normalizeStudentRecord);
+}
+
+function syncStudentWithFirebase(student) {
+  if (!window.sinapFirebase?.saveStudent) return;
+
+  window.sinapFirebase.saveStudent(student).catch((error) => {
+    console.error("No se pudo sincronizar el estudiante con Firebase:", error);
+  });
 }
 
 function saveStudent(student) {
@@ -295,6 +330,8 @@ function saveStudent(student) {
     nombre: (student.nombre || previous.nombre || "").trim(),
     correo: email,
     carrera: (student.carrera || previous.carrera || "").trim(),
+    seccion: (student.seccion || previous.seccion || "").trim(),
+    periodo: (student.periodo || previous.periodo || "").trim(),
     docenteCorreo,
     docenteNombre: teacher ? teacher.name : "",
     necesidades: Array.isArray(student.necesidades)
@@ -313,7 +350,8 @@ function saveStudent(student) {
   }
 
   writeStorage(STORAGE_KEY, students);
-  return record;
+  syncStudentWithFirebase(record);
+  return normalizeStudentRecord(record);
 }
 
 function deleteStudent(id) {
@@ -352,8 +390,17 @@ function formatNeeds(needs = []) {
 }
 
 function createSession(user) {
-  const { role, name, email, carrera, carreras, docenteCorreo } = user;
-  return { role, name, email, carrera, carreras, docenteCorreo };
+  const {
+    role,
+    name,
+    email,
+    carrera,
+    seccion,
+    periodo,
+    carreras,
+    docenteCorreo,
+  } = user;
+  return { role, name, email, carrera, seccion, periodo, carreras, docenteCorreo };
 }
 
 function setSessionForUser(user) {
@@ -400,6 +447,8 @@ function downloadRecommendations(student) {
         <h1>SINAP - Ajustes razonables</h1>
         <p><strong>Estudiante:</strong> ${escapeHtml(student.nombre)}</p>
         <p><strong>Carrera:</strong> ${escapeHtml(student.carrera)}</p>
+        <p><strong>Seccion:</strong> ${escapeHtml(student.seccion || "Sin seccion")}</p>
+        <p><strong>Periodo:</strong> ${escapeHtml(student.periodo || "Sin periodo")}</p>
         <p><strong>Correo:</strong> ${escapeHtml(student.correo)}</p>
         <p>${formatNeeds(student.necesidades)
           .map((need) => `<span class="tag">${escapeHtml(need)}</span>`)
@@ -408,7 +457,7 @@ function downloadRecommendations(student) {
         <ul>${recommendations
           .map((item) => `<li>${escapeHtml(item)}</li>`)
           .join("")}</ul>
-        <div class="note">Estas recomendaciones son orientativas, confidenciales y deben adaptarse al contexto de cada asignatura.</div>
+        <div class="note">Estas recomendaciones son orientativas. La informacion es sensible y confidencial; no debe compartirse con personas no autorizadas ni revelar nombres, condiciones o detalles de estudiantes.</div>
       </body>
     </html>
   `);

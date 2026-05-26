@@ -37,7 +37,7 @@ function renderTable() {
   const rows = sinap
     .getStudents()
     .filter((student) =>
-      `${student.nombre} ${student.correo} ${student.carrera} ${sinap.getTeacherLabel(student.docenteCorreo)}`
+      `${student.nombre} ${student.correo} ${student.carrera} ${student.seccion} ${student.periodo} ${sinap.getTeacherLabel(student.docenteCorreo)}`
         .toLowerCase()
         .includes(term),
     );
@@ -49,6 +49,8 @@ function renderTable() {
           <tr>
             <td><strong>${sinap.escapeHtml(student.nombre)}</strong><br><span class="muted">${sinap.escapeHtml(student.correo)}</span></td>
             <td>${sinap.escapeHtml(student.carrera)}</td>
+            <td>${sinap.escapeHtml(student.seccion)}</td>
+            <td>${sinap.escapeHtml(student.periodo)}</td>
             <td>${sinap.escapeHtml(sinap.getTeacherLabel(student.docenteCorreo))}</td>
             <td>${sinap
               .formatNeeds(student.necesidades)
@@ -65,7 +67,7 @@ function renderTable() {
         `,
         )
         .join("")
-    : `<tr><td colspan="5" class="muted">No hay estudiantes registrados.</td></tr>`;
+    : `<tr><td colspan="7" class="muted">No hay estudiantes registrados.</td></tr>`;
 }
 
 form.addEventListener("submit", (event) => {
@@ -78,6 +80,8 @@ form.addEventListener("submit", (event) => {
   const name = document.getElementById("studentName").value.trim();
   const password = document.getElementById("studentPassword").value.trim();
   const carrera = document.getElementById("studentCareer").value.trim();
+  const seccion = document.getElementById("studentSection").value.trim();
+  const periodo = document.getElementById("studentPeriod").value.trim();
   const docenteCorreo = teacherSelect.value;
   const existingUser = sinap.getUserByEmail("estudiante", email);
 
@@ -88,6 +92,8 @@ form.addEventListener("submit", (event) => {
     email,
     password: password || existingUser?.password || "",
     carrera,
+    seccion,
+    periodo,
     docenteCorreo,
   });
 
@@ -95,6 +101,8 @@ form.addEventListener("submit", (event) => {
     nombre: name,
     correo: email,
     carrera,
+    seccion,
+    periodo,
     docenteCorreo,
   });
 
@@ -128,6 +136,8 @@ table.addEventListener("click", (event) => {
       ? "Dejar vacio para conservar la contraseña"
       : "";
     document.getElementById("studentCareer").value = student.carrera;
+    document.getElementById("studentSection").value = student.seccion;
+    document.getElementById("studentPeriod").value = student.periodo;
     renderTeacherOptions(student.docenteCorreo || "");
     message.textContent = "Editando estudiante existente.";
     return;

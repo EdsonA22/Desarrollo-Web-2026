@@ -70,6 +70,18 @@
                 <label for="studentCareer">Carrera o programa</label>
                 <input id="studentCareer" required />
               </div>
+              <div>
+                <label for="studentSection">Seccion</label>
+                <input id="studentSection" placeholder="Ejemplo: A" required />
+              </div>
+              <div>
+                <label for="studentPeriod">Periodo</label>
+                <input
+                  id="studentPeriod"
+                  placeholder="Ejemplo: 2026-1"
+                  required
+                />
+              </div>
 
               <div>
                 <label for="studentTeacher">Docente asignado</label>
@@ -96,13 +108,18 @@
 
         <section class="card" style="margin-top: 18px">
           <label for="search">Buscar estudiante</label>
-          <input id="search" placeholder="Nombre, correo o carrera" />
+          <input
+            id="search"
+            placeholder="Nombre, correo, carrera, seccion o periodo"
+          />
           <div style="overflow-x: auto; margin-top: 16px">
             <table>
               <thead>
                 <tr>
                   <th>Nombre</th>
                   <th>Carrera</th>
+                  <th>Seccion</th>
+                  <th>Periodo</th>
                   <th>Docente</th>
                   <th>Necesidades</th>
                   <th>Acciones</th>
@@ -115,6 +132,7 @@
       </main>
     </div>
 
+    <script type="module" src="../Conexion/apps.js"></script>
     <script src="../Conexion/app.js"></script>
     <script src="../Conexion/adminlog.js"></script>
   </body>

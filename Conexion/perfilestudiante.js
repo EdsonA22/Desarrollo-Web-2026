@@ -20,6 +20,8 @@ if (session) {
     ? `
       <div class="alert success"><strong>Registro activo.</strong> Tus necesidades ya estan guardadas.</div>
       <p><strong>Carrera:</strong> ${sinap.escapeHtml(student.carrera)}</p>
+      <p><strong>Seccion:</strong> ${sinap.escapeHtml(student.seccion)}</p>
+      <p><strong>Periodo:</strong> ${sinap.escapeHtml(student.periodo)}</p>
       <p><strong>Docente asignado:</strong> ${sinap.escapeHtml(docente)}</p>
       <p>${sinap
         .formatNeeds(student.necesidades)
