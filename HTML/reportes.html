@@ -38,20 +38,15 @@
         </header>
 
         <section class="grid four" id="kpis"></section>
-
         <section class="grid two" style="margin-top: 18px">
           <article class="card">
             <h3>Distribucion de necesidades</h3>
             <div
+              id="needsDonut"
               class="donut"
               aria-label="Grafico de pastel de necesidades"
             ></div>
-            <p>
-              <span class="badge">Visual 30%</span
-              ><span class="badge">Neurodivergencia 26%</span
-              ><span class="badge">Cognitiva 25%</span
-              ><span class="badge">Auditiva 19%</span>
-            </p>
+            <p id="needsBadges"></p>
           </article>
 
           <article class="card">
@@ -62,18 +57,15 @@
 
         <section class="grid two" style="margin-top: 18px">
           <article class="card">
-            <h3>Tendencia de registros mensuales</h3>
-            <div class="trend" aria-label="Grafico de tendencia mensual">
-              <div style="height: 45px">Ene</div>
-              <div style="height: 70px">Feb</div>
-              <div style="height: 95px">Mar</div>
-              <div style="height: 125px">Abr</div>
-              <div style="height: 150px">May</div>
-              <div style="height: 175px">Jun</div>
-            </div>
+            <h3>Estudiantes por periodo</h3>
+            <div
+              id="periodTrend"
+              class="trend"
+              aria-label="Grafico de estudiantes por periodo"
+            ></div>
             <section class="alert success" style="margin-top: 16px">
-              Mantener campanas de sensibilizacion ante el crecimiento sostenido
-              de registros.
+              Distribucion de alumnos registrados agrupados por periodo
+              academico.
             </section>
           </article>
 
