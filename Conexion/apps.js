@@ -13,6 +13,16 @@ import {
 // GUARDAR ESTUDIANTE
 
 async function saveStudent(student) {
+  console.log("Entrando a saveStudent");
+
+  Swal.fire({
+    position: 'top-end',
+    icon: 'success',
+    title: 'Alumno Registrado',
+    showConfirmButton: false,
+    timer: 2500
+  });
+
   try {
     const studentId = String(student.correo || Date.now())
       .trim()

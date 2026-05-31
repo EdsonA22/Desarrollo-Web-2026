@@ -151,6 +151,15 @@ function setupAdminTeachers() {
           document.getElementById("teacherCareers").value,
         ),
       });
+console.log("Agregando Docente");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Docente Registrado",
+        text: "El docente fue registrado correctamente",
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "#22c55e"
+      });
 
       resetTeacherForm();
       document.getElementById("teacherFormMessage").textContent =
